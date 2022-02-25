@@ -5,10 +5,10 @@ import {useNavigate} from "react-router-dom";
 
 export default function Profile() {
     let navigate = useNavigate();
-    const handleLogout = () => {
-        sessionStorage.removeItem('Auth Token');
-        navigate('/home')
-    }
+    // const handleLogout = () => {
+    //     sessionStorage.removeItem('Auth Token');
+    //     navigate('/home')
+    // }
 
     const [counter, setCounter] = useState(0)
   
@@ -46,10 +46,7 @@ export default function Profile() {
                         <Button size="lg" onClick={handleClick2}>decrement</Button>
                     </Col>
                 </Row>
-                {/* <Row> */}
-                
-                    <Button  variant="primary" onClick={handleLogout}>Logout</Button>
-                {/* </Row> */}
+
             </Container>
 
         </div>

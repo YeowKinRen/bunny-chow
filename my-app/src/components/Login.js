@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate} from "react-router-dom";
 
 
-export default function Login() {
+export default function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     let navigate = useNavigate();
@@ -46,7 +46,10 @@ export default function Login() {
             const user = userCredential.user;
             sessionStorage.setItem('Auth Token', userCredential._tokenResponse.refreshToken)
             // alert("login "+ user);
+            
+            props.setLogged(true);
             navigate('/profile');
+
             // ...
           })
         } catch (e) {

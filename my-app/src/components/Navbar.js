@@ -1,23 +1,39 @@
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
+import {Container, Nav, NavDropdown, Navbar, Button} from "react-bootstrap";
+import {useNavigate, useLocation } from "react-router-dom";
 
-function NavBar() {
+function NavBar(props) {
+  let navigate = useNavigate();
+
+  // const [value, setValue] = React.useState(
+  //   sessionStorage.getItem('Auth Token') || ''
+  // );
 
 
-  // const Navlog = (            
-  // <Nav className="me-auto">
-  // <Nav.Link href="/home">Home</Nav.Link>
-  // <Nav.Link href="/login">Login</Nav.Link>
-  // <Nav.Link href="/signup">Sign Up</Nav.Link>
-  // <Nav.Link href="/profile">Profile</Nav.Link> 
-  // </Nav>);
-  const isAuthenticated = () => {
+  // useEffect(() => {
+  //   // document.title = `You clicked ${count} times`;
+  //   console.log("rerender");
+  // }, [value]);
 
-  let authToken = sessionStorage.getItem('Auth Token');
-  return authToken;
-  };
+  // const isAuthenticated = () => {
+
+  //   let authToken = sessionStorage.getItem('Auth Token');
+  //   console.log("authToken")
+  //   return authToken;
+  
+  // };
+
+
+
+  const handleLogout = () => {
+    console.log("logout");
+    sessionStorage.removeItem('Auth Token');
+    navigate('/home')
+    props.setLogged(false);
+  }
+
 
 
 
@@ -32,9 +48,9 @@ function NavBar() {
             {/* <Navlog/> */}
             <Nav className="me-auto">
               <Nav.Link href="/home">Home</Nav.Link>
-              {!isAuthenticated && (<Nav.Link href="/login">Login</Nav.Link>)}
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/signup">Sign Up</Nav.Link>
+             
+              <Nav.Link disabled={props.logged} href="/login">Login</Nav.Link>
+              <Nav.Link disabled={props.logged} href="/signup">Sign Up</Nav.Link>
               <Nav.Link href="/profile">Profile</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown" bg="dark" variant="dark" >
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -43,6 +59,17 @@ function NavBar() {
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
               </NavDropdown>
+            </Nav>
+
+            <Nav  className="ms-auto">
+              {!props.logged && (
+              <a href="/signup"><button className="btn btn-outline-success my-2 my-sm-0 mx-2" type="button" href="/signup">Signup</button></a>)}
+              <br/>
+              
+              {!props.logged && (
+              <a href="/login"><button className="btn btn-outline-success my-2 my-sm-0" type="button">Login</button></a>)}
+              {props.logged && (
+              <button className="btn btn-outline-success my-2 my-sm-0" type="button" onClick={handleLogout}>Logout</button>)}
             </Nav>
           </Navbar.Collapse>
         </Container>

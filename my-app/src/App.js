@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import {BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {Router, BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import NavBar from "./components/Navbar";
@@ -10,34 +10,40 @@ import { app } from './firebase-config';
 // import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 // import { app } from '../firebase-config';
 
 function App() {
-  // let navigate = useNavigate();
-  // this.setState({ key: Math.random() });
+  const [logged, setLogged] = useState(false);
+
+  useEffect(() => {
+    // document.title = `You clicked ${count} times`;
+    console.log(logged)
+  }, [logged]);
+
 
   const PrivateRoute = ({children }) => {
-    let authToken = sessionStorage.getItem('Auth Token');
-    return authToken ? children : <Navigate to="/login" />;
+    // let authToken = sessionStorage.getItem('Auth Token');
+    return logged ? children : <Navigate to="/login" />;
   };
-
 
   return (
     <div className="App">
-      <NavBar/>
+      
       <ToastContainer />
       
         <BrowserRouter>
+        <NavBar logged={logged} setLogged={setLogged}/>
+        
             <Routes>
+
+              <Route path="/" component={<Home/>} />
               <Route path='/home' element={<Home/>} />
-              <Route path='/login' element={<Login/>} />
-              <Route path='/signup' element={<Signup/>} />
-              {/* <Route path='/profile' element={<Profile/>} /> */}
+              <Route path='/login' element={<Login logged={logged} setLogged={setLogged}/>} />
+              <Route path='/signup' element={<Signup logged={logged} setLogged={setLogged}/>} />
               <Route path="/profile" element={<PrivateRoute><Profile/></PrivateRoute>}/>
             </Routes>
       </BrowserRouter> 
-      {/* <Home/> */}
       
 
 
