@@ -25,7 +25,7 @@ const handleAction = useCallback(async e => {
         const user = userCredential.user;
         sessionStorage.setItem('Auth Token', userCredential._tokenResponse.refreshToken)
         alert("signup: "+ user);
-        navigate('/');
+        navigate('/profile');
         // ...
       })
     } catch (e) {
@@ -40,6 +40,9 @@ const handleAction = useCallback(async e => {
   }, [password, email])
 
     return (
+        <div>
+            <h1>Sign Up</h1>
+
         <Container>
             <Form onSubmit={handleAction}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -60,5 +63,6 @@ const handleAction = useCallback(async e => {
                 </Button>
             </Form>
         </Container>
+        </div>
     )
 }

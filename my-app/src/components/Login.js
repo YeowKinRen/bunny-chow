@@ -35,7 +35,7 @@ export default function Login() {
       const handleAction = useCallback(async e => {
   
         e.preventDefault();
-        alert(password+"  "+email);
+        // alert(password+"  "+email);
     
         const auth = getAuth()
         try {
@@ -45,8 +45,8 @@ export default function Login() {
             console.log(userCredential) 
             const user = userCredential.user;
             sessionStorage.setItem('Auth Token', userCredential._tokenResponse.refreshToken)
-            alert("login "+ user);
-            navigate('/');
+            // alert("login "+ user);
+            navigate('/profile');
             // ...
           })
         } catch (e) {
@@ -63,8 +63,10 @@ export default function Login() {
 
       }, [password, email])
       
-
+    let page ="Login";
     return (
+      <div>
+      <h1>{page}</h1>
         <Container>
             <Form onSubmit={handleAction}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -84,5 +86,6 @@ export default function Login() {
                 </Button>
             </Form>
         </Container>
+        </div>
     )
 }
